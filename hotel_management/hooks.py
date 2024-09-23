@@ -1,7 +1,7 @@
 app_name = "hotel_management"
 app_title = "Hotel Management"
 app_publisher = "Savan"
-app_description = "This is for hotel related operations."
+app_description = "This is use for hotel related operations."
 app_email = "patelsavan6891@gmail.com"
 app_license = "mit"
 

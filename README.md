@@ -1,6 +1,6 @@
 ## Hotel Management
 
-This is for hotel related operations.
+This is use for hotel related operations.
 
 #### License
 

@@ -3,7 +3,7 @@ name = "hotel_management"
 authors = [
     { name = "Savan", email = "patelsavan6891@gmail.com"}
 ]
-description = "This is for hotel related operations."
+description = "This is use for hotel related operations."
 requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]
