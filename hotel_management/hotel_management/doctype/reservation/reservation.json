@@ -1,0 +1,168 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "Hotel/REV/.#####",
+ "creation": "2024-09-23 12:34:55.297140",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "customer_name",
+  "change_detail",
+  "order_date",
+  "mobile_number",
+  "invoice_address",
+  "column_break_dbpu",
+  "email",
+  "arrival_date",
+  "expected_depature",
+  "adult",
+  "children",
+  "section_break_hotx",
+  "hotel_room",
+  "reservation_line",
+  "address_tab",
+  "primary_address",
+  "change_address",
+  "column_break_gymy"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer Name",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "order_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Order Date",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "customer_name.mobile_no",
+   "fieldname": "mobile_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Mobile Number"
+  },
+  {
+   "fieldname": "invoice_address",
+   "fieldtype": "Data",
+   "label": "Invoice Address"
+  },
+  {
+   "fieldname": "column_break_dbpu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "customer_name.email_id",
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email"
+  },
+  {
+   "fieldname": "arrival_date",
+   "fieldtype": "Date",
+   "label": "Arrival Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expected_depature",
+   "fieldtype": "Date",
+   "label": "Expected Depature"
+  },
+  {
+   "fieldname": "adult",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Adult",
+   "reqd": 1
+  },
+  {
+   "fieldname": "children",
+   "fieldtype": "Data",
+   "label": "Children"
+  },
+  {
+   "fieldname": "section_break_hotx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "hotel_room",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Hotel Room",
+   "options": "Hotel Rooms"
+  },
+  {
+   "fieldname": "address_tab",
+   "fieldtype": "Tab Break",
+   "label": "Address"
+  },
+  {
+   "fetch_from": "customer_name.primary_address",
+   "fieldname": "primary_address",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Primary Address"
+  },
+  {
+   "fieldname": "column_break_gymy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reservation_line",
+   "fieldtype": "Table",
+   "label": "Reservation Line",
+   "options": "Reservation Line"
+  },
+  {
+   "fieldname": "change_address",
+   "fieldtype": "Button",
+   "label": "Change Address"
+  },
+  {
+   "fieldname": "change_detail",
+   "fieldtype": "Button",
+   "label": "Change Detail"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-24 12:16:23.312270",
+ "modified_by": "Administrator",
+ "module": "Hotel Management",
+ "name": "Reservation",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
