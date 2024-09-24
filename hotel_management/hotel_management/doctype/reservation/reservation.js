@@ -96,13 +96,13 @@ frappe.ui.form.on('Reservation', {
 						frappe.set_route('Form', 'Sales Invoice', response.message);
 					}
 				});
-			});			
+			});
+						
 		});
 	},
 	department: function (frm) {
 		var department = frm.doc.department;
 
-		// console.log("\n department :::::::111::::::::", frm.doc.department, department)
 		frm.fields_dict['employee'].grid.get_field('full_name').get_query = function () {
 			return {
 				filters: {

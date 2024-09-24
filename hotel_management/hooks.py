@@ -150,20 +150,20 @@ app_license = "mit"
 
 # scheduler_events = {
 # 	"all": [
-# 		"hotel_management.tasks.all"
+# 		"hotel_management.reservation.send_reminders"
 # 	],
-# 	"daily": [
-# 		"hotel_management.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"hotel_management.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"hotel_management.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"hotel_management.tasks.monthly"
-# 	],
+	# "daily": [
+	# 	"hotel_management.tasks.daily"
+	# ],
+	# "hourly": [
+	# 	"hotel_management.tasks.hourly"
+	# ],
+	# "weekly": [
+	# 	"hotel_management.tasks.weekly"
+	# ],
+	# "monthly": [
+	# 	"hotel_management.tasks.monthly"
+	# ],
 # }
 
 # Testing

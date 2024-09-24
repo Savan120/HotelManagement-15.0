@@ -9,6 +9,20 @@ from frappe.model.document import Document
 class Reservation(Document):
     pass
 
+    # def send_reminders():
+    #     # Custom logic for sending reminders
+    #     frappe.logger().info("Reminder: Sending reminders every few minutes...")
+    #     # Add your reminder logic here, such as sending emails or notifications
+    #     recipients = frappe.get_all("User", filters={"enabled": 1}, fields=["email"])
+        
+    #     for recipient in recipients:
+    #         frappe.sendmail(
+    #             recipients=[recipient.email],
+    #             subject="Reminder",
+    #             message="This is a reminder sent every few minutes."
+    #         )
+    #     frappe.logger().info("Reminders sent successfully.")
+
 @frappe.whitelist()
 def send_mail(doc):
     filter_dict = json.loads(doc)
@@ -113,3 +127,5 @@ def create_invoice(reservation_id, customer_name, rate, capacity, hotel_room):
     invoice.insert()
     # invoice.submit()
     return invoice.name
+
+
