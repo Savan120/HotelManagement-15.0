@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "Hotel/REV/.#####",
+ "autoname": "REV/.####",
  "creation": "2024-09-23 12:34:55.297140",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -15,12 +15,13 @@
   "column_break_dbpu",
   "email",
   "arrival_date",
-  "expected_depature",
+  "expected_departure",
   "adult",
   "children",
   "section_break_hotx",
   "hotel_room",
   "reservation_line",
+  "description",
   "address_tab",
   "primary_address",
   "change_address",
@@ -78,11 +79,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "expected_depature",
-   "fieldtype": "Date",
-   "label": "Expected Depature"
-  },
-  {
    "fieldname": "adult",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -136,11 +132,21 @@
    "fieldname": "change_detail",
    "fieldtype": "Button",
    "label": "Change Detail"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "expected_departure",
+   "fieldtype": "Date",
+   "label": "Expected Departure"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-24 12:16:23.312270",
+ "modified": "2024-09-25 16:07:41.989774",
  "modified_by": "Administrator",
  "module": "Hotel Management",
  "name": "Reservation",

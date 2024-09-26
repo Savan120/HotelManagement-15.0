@@ -2,26 +2,25 @@
 # For license information, please see license.txt
 
 import frappe
+import base64
+from frappe import _
 import json
 from frappe.model.document import Document
+from frappe import get_all
+import frappe.utils
+from frappe.utils.print_format import download_pdf
+from frappe.utils.pdf import get_pdf
+import frappe.utils.print_format
+from PyPDF2 import PdfMerger
+import io
+
+
+
 
 
 class Reservation(Document):
     pass
 
-    # def send_reminders():
-    #     # Custom logic for sending reminders
-    #     frappe.logger().info("Reminder: Sending reminders every few minutes...")
-    #     # Add your reminder logic here, such as sending emails or notifications
-    #     recipients = frappe.get_all("User", filters={"enabled": 1}, fields=["email"])
-        
-    #     for recipient in recipients:
-    #         frappe.sendmail(
-    #             recipients=[recipient.email],
-    #             subject="Reminder",
-    #             message="This is a reminder sent every few minutes."
-    #         )
-    #     frappe.logger().info("Reminders sent successfully.")
 
 @frappe.whitelist()
 def send_mail(doc):
@@ -129,3 +128,88 @@ def create_invoice(reservation_id, customer_name, rate, capacity, hotel_room):
     return invoice.name
 
 
+# @frappe.whitelist()
+# def get_reservation_report(from_date, to_date):
+#     print("From Date>>>>>>>>>>>>>>>>>>",from_date,"To date:::::::::::::::::::::::::::::::::::::::", to_date)
+#     reservations = get_all('Reservation', filters=[
+#         ['arrival_date', '>=', from_date],
+#         ['expected_depature', '<=', to_date]
+#     ])
+#     print("Reservation::::::::::::::::::::::::::::::::::::::::::::::::::::",reservations)
+    
+#     if reservations:
+#         reservation_names = [reservation.name for reservation in reservations]
+#         print("Reservation in for loop::::::::::::::::::::::::::::::::::::::::::::;;",reservation_names)
+#         return reservation_names
+#     else:
+#         frappe.throw("No reservations found in the specified date range.")
+
+
+
+# @frappe.whitelist()
+# def get_reservation_report(from_date, to_date):
+#     print("From Date::::::::::::::::::", from_date, "To Date::::::::::::::::::::::::::", to_date)
+    
+#     reservations = frappe.get_all('Reservation', filters=[
+#         ['arrival_date', '>=', from_date],
+#         ['expected_depature', '<=', to_date]
+#     ])
+    
+#     print("Reservations Found:::::::::::::::::::::::::::::::::::::", reservations)
+    
+#     if reservations:
+#         return reservations[0].name
+#     else:
+#         frappe.throw(_("No reservations found in the specified date range."))
+
+
+# @frappe.whitelist()
+# def download_combined_pdf(from_date, to_date):
+#     # Fetch reservation records within the given date range
+#     reservation_records = get_all('Reservation', filters=[
+#         ['arrival_date', '>=', from_date],
+#         ['expected_depature', '<=', to_date]
+#     ])
+    
+#     print("Reservation records:", reservation_records)
+
+#     if not reservation_records:
+#         frappe.throw("No reservations found for the selected date range.")
+
+#     pdf_merger = PdfMerger()
+
+#     # Loop through each reservation record and fetch its PDF
+#     for reservation in reservation_records:
+#         reservation_name = reservation.name
+#         print("Processing reservation ID:", reservation_name)  # Extract the reservation ID
+#         try:
+#             # Fetch the PDF for the reservation as Base64
+#             pdf_content = download_pdf(
+#                 doctype="Reservation", 
+#                 name=reservation_name,  # Pass a single reservation name
+#                 format="Reservation List", 
+#                 no_letterhead=0
+#             )
+
+#             # Check if pdf_content is None or empty
+#             if not pdf_content:
+#                 frappe.throw(f"No PDF content returned for Reservation ID {reservation_name}.")
+
+#             print("PDF content for {}: {}".format(reservation_name, pdf_content))
+
+#             # Decode the Base64 content
+#             decoded_pdf_content = base64.b64decode(pdf_content)
+            
+#             # Append the decoded PDF content to the merger
+#             pdf_merger.append(io.BytesIO(decoded_pdf_content))
+
+#         except Exception as e:
+#             frappe.throw(f"Failed to download PDF for Reservation ID {reservation_name}: {str(e)}")
+
+#     # Save the combined PDF
+#     combined_pdf_path = "/tmp/combined_reservations.pdf"
+#     with open(combined_pdf_path, "wb") as output_pdf:
+#         pdf_merger.write(output_pdf)
+
+
+#     return combined_pdf_path

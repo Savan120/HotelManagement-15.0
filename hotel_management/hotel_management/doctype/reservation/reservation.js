@@ -67,15 +67,12 @@ frappe.ui.form.on('Reservation', {
 });
 
 
-
-
-
 frappe.ui.form.on('Reservation', {  
 	refresh: function (frm) {
 		// Add Checkout Button
 		frm.add_custom_button(__('Checkout'), function () {
-			if (!frm.doc.expected_depature) {
-				frm.set_value('expected_depature', frappe.datetime.nowdate());
+			if (!frm.doc.expected_departure) {
+				frm.set_value('expected_departure', frappe.datetime.nowdate());
 			}
 			frm.set_df_property("section_house_keeping", 'hidden', 0);
 			frm.set_df_property('section_break_emp', 'hidden', 0);
