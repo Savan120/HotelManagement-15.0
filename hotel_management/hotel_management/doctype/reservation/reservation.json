@@ -25,7 +25,9 @@
   "address_tab",
   "primary_address",
   "change_address",
-  "column_break_gymy"
+  "column_break_gymy",
+  "birthdate",
+  "age"
  ],
  "fields": [
   {
@@ -142,11 +144,23 @@
    "fieldname": "expected_departure",
    "fieldtype": "Date",
    "label": "Expected Departure"
+  },
+  {
+   "fetch_from": "customer_name.custom_dob",
+   "fieldname": "birthdate",
+   "fieldtype": "Date",
+   "label": "BirthDate"
+  },
+  {
+   "fetch_from": "customer_name.custom_age",
+   "fieldname": "age",
+   "fieldtype": "Data",
+   "label": "Age"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-25 16:07:41.989774",
+ "modified": "2024-09-26 13:42:45.279740",
  "modified_by": "Administrator",
  "module": "Hotel Management",
  "name": "Reservation",
