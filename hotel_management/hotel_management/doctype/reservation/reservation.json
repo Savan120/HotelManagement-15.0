@@ -11,13 +11,14 @@
   "change_detail",
   "order_date",
   "mobile_number",
-  "invoice_address",
+  "status",
   "column_break_dbpu",
   "email",
   "arrival_date",
   "expected_departure",
   "adult",
   "children",
+  "invoice_address",
   "section_break_hotx",
   "hotel_room",
   "reservation_line",
@@ -27,7 +28,8 @@
   "change_address",
   "column_break_gymy",
   "birthdate",
-  "age"
+  "age",
+  "amended_from"
  ],
  "fields": [
   {
@@ -112,7 +114,6 @@
    "fetch_from": "customer_name.primary_address",
    "fieldname": "primary_address",
    "fieldtype": "Small Text",
-   "in_list_view": 1,
    "label": "Primary Address"
   },
   {
@@ -156,11 +157,30 @@
    "fieldname": "age",
    "fieldtype": "Data",
    "label": "Age"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Reservation",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "Reserved",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Reserved\nCheck Out"
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-09-26 13:42:45.279740",
+ "modified": "2024-09-27 15:13:24.582999",
  "modified_by": "Administrator",
  "module": "Hotel Management",
  "name": "Reservation",
@@ -180,7 +200,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

@@ -28,12 +28,12 @@
    "options": "All\nAll/Single\nAll/Double\nAll/Triple"
   },
   {
-   "default": "Active",
+   "default": "Available",
    "fieldname": "status",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Active\nInactive"
+   "options": "Available\nReserved\nInactive"
   },
   {
    "fieldname": "capacity",
@@ -51,7 +51,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-23 13:45:25.050650",
+ "modified": "2024-09-27 12:15:09.864041",
  "modified_by": "Administrator",
  "module": "Hotel Management",
  "name": "Reservation Line",

@@ -1,0 +1,34 @@
+{
+ "attach_print": 1,
+ "channel": "Email",
+ "condition": "doc.docstatus == \"Submitted\"",
+ "creation": "2024-09-27 13:50:53.390501",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Reservation",
+ "enabled": 1,
+ "event": "New",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<p>Dear {{ doc.customer_name }},</p>\n\n<p>Thank you for your reservation! Your Reservation ID is {{ doc.name }}.</p>\n\n<p>Regards,\nYour Hotel Management Team</p>\n",
+ "message_type": "Markdown",
+ "modified": "2024-09-27 15:45:39.362626",
+ "modified_by": "Administrator",
+ "module": "Hotel Management",
+ "name": "Reservation",
+ "owner": "Administrator",
+ "print_format": "Reservation",
+ "recipients": [
+  {
+   "condition": "doc.docstatus == \"Submitted\"",
+   "receiver_by_document_field": "owner",
+   "receiver_by_role": "Administrator"
+  }
+ ],
+ "send_system_notification": 1,
+ "send_to_all_assignees": 0,
+ "sender": "Patelsavan6891",
+ "sender_email": "patelsavan6891@gmail.com",
+ "subject": "Reservation ID :{{ doc.name }} "
+}

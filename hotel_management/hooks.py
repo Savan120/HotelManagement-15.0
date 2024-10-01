@@ -137,21 +137,32 @@ doctype_js = {"Customer" : "public/js/Customer_get_age.js"}
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+    "Reservation": {
+        "on_submit": "hotel_management.hotel_management.doctype.reservation.reservation.update_room_status_on_reservation",
+
+    }
+}
+
+
+
 
 # Scheduled Tasks
 # ---------------
-
 # scheduler_events = {
-# 	"all": [
-# 		"hotel_management.reservation.send_reminders"
-# 	],
+#     "cron": {
+#         "* * * * *": [
+#             "hotel_management.task.send_reminder_email"
+#         ]
+#     }
+# }
+
+# */5 * * * *: Every 5 minutes.
+# 0 0 * * *: Every day at midnight.
+# 0 12 * * 1: Every Monday at 12 PM.
+# 0 9 * * *: Every day at 9 AM.
+# * * * * *: This cron expression means "run the job every minute."
+
 	# "daily": [
 	# 	"hotel_management.tasks.daily"
 	# ],

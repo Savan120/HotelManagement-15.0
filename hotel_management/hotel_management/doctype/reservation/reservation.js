@@ -6,6 +6,9 @@ frappe.ui.form.on('Reservation', {
 		if (!frm.doc.date_ordered) {
 			frm.set_value('order_date', frappe.datetime.nowdate());
 		}
+		if (!frm.doc.expected_departure) {
+			frm.set_value('expected_departure', frappe.datetime.nowdate());
+		}
     },
 	customer_name: function (frm) {
 		if (frm.doc.customer_name) {
@@ -29,7 +32,7 @@ frappe.ui.form.on('Reservation', {
 				args: {
 					doctype: 'Hotel Rooms',
 					filter: {
-						name: frm.doc.hotel_room
+						name: frm.doc.hotel_room,
 					}
 				},
 				callback: function (r) {
@@ -53,66 +56,158 @@ frappe.ui.form.on('Reservation', {
 });
 
 
+// frappe.ui.form.on('Reservation', {
+//     refresh: function(frm) {
+//         frm.add_custom_button(__('Send Mail'), function () {
+//             frappe.call({
+//                 method: "hotel_management.hotel_management.doctype.reservation.reservation.send_mail",
+//                 args: {
+//                     doc: frm.doc
+//                 },
+//             });
+//         });
+//     }
+// });
+
+
+// frappe.ui.form.on('Reservation', {  
+// 	refresh: function (frm) {
+// 		// Add Checkout Button
+// 		// frm.add_custom_button(__('Checkout'), function () {
+// 		// 	// if (!frm.doc.expected_departure) {
+// 		// 	// 	frm.set_value('expected_departure', frappe.datetime.nowdate());
+// 		// 	// }
+// 		// 	frm.set_df_property("section_house_keeping", 'hidden', 0);
+// 		// 	frm.set_df_property('section_break_emp', 'hidden', 0);
+// 		// 	frm.set_df_property("rating", 'hidden', 0);
+			
+// 			frm.add_custom_button(__('Create Invoice'), function() {
+// 				frappe.call({
+// 					method: 'hotel_management.hotel_management.doctype.reservation.reservation.create_invoice',
+// 					args: {
+// 						'reservation_id': frm.doc.name,
+// 						'customer_name': frm.doc.customer_name,  // Fix here
+// 						'rate': frm.doc.reservation_line[0].rate,  // Fix here
+// 						'capacity': frm.doc.reservation_line[0].capacity,
+// 						'hotel_room': frm.doc.hotel_room
+// 					},
+// 					callback: function(response) {
+// 						frappe.msgprint("Invoice Created Successfully");
+// 						frappe.set_route('Form', 'Sales Invoice', response.message);
+// 					}
+// 				});
+// 			});
+						
+// 		// });
+// 	},
+// 	department: function (frm) {
+// 		var department = frm.doc.department;
+
+// 		frm.fields_dict['employee'].grid.get_field('full_name').get_query = function () {
+// 			return {
+// 				filters: {
+// 					'department': department,
+// 					'status': 'Active',
+					
+// 				}
+// 			};
+// 		};
+// 		frm.fields_dict['employee'].grid.refresh();
+// 	}
+// });
+
+frappe.ui.form.on('Reservation', {
+    onload: function(frm) {
+        frm.set_query('hotel_room', function() {
+            return {
+                filters: {
+                    status: 'Available'
+                }
+            };
+        });
+    }
+});
+
+
 frappe.ui.form.on('Reservation', {
     refresh: function(frm) {
-        frm.add_custom_button(__('Send Mail'), function () {
+        // Create a dropdown button
+        frm.add_custom_button(__(' '), function() {}, __('Options'));
+
+        // Add Checkout button to the dropdown
+        frm.add_custom_button(__('Checkout'), function() {
+            // Show a confirmation dialog
+            frappe.confirm(
+                'Are you sure you want to check out this reservation?',
+                function() {
+                    // If confirmed, call the server-side method
+                    frappe.call({
+                        method: "hotel_management.hotel_management.doctype.reservation.reservation.update_room_status_on_reservation",
+                        args: {
+                            doc_name: frm.doc.name,  // Pass the document name
+                            method: "Checkout"        // Pass the method name
+                        },
+                        callback: function(r) {
+                            if (r.message) {
+                                frappe.msgprint('Room status updated to Available.');
+                                frm.refresh(); // Refresh the form to see changes
+                            }
+                        }
+                    });
+                },
+                function() {
+                    // If canceled, do nothing
+                    console.log('Checkout canceled.');
+                }
+            );
+
+            frm.set_df_property("section_house_keeping", 'hidden', 0);
+            frm.set_df_property('section_break_emp', 'hidden', 0);
+            frm.set_df_property("rating", 'hidden', 0);	
+        }, __('Options'));
+
+        // Add Create Invoice button to the dropdown
+        frm.add_custom_button(__('Create Invoice'), function() {
+            frappe.call({
+                method: 'hotel_management.hotel_management.doctype.reservation.reservation.create_invoice',
+                args: {
+                    'reservation_id': frm.doc.name,
+                    'customer_name': frm.doc.customer_name,  // Fix here
+                    'rate': frm.doc.reservation_line[0].rate,  // Fix here
+                    'capacity': frm.doc.reservation_line[0].capacity,
+                    'hotel_room': frm.doc.hotel_room
+                },
+                callback: function(response) {
+                    frappe.msgprint("Invoice Created Successfully");
+                    frappe.set_route('Form', 'Sales Invoice', response.message);
+                }
+            });
+        }, __('Options'));
+
+        // Add Send Mail button to the dropdown
+        frm.add_custom_button(__('Send Mail'), function() {
             frappe.call({
                 method: "hotel_management.hotel_management.doctype.reservation.reservation.send_mail",
                 args: {
                     doc: frm.doc
                 },
             });
-        });
+        }, __('Options'));
+    },
+
+    department: function (frm) {
+        var department = frm.doc.department;
+
+        frm.fields_dict['employee'].grid.get_field('full_name').get_query = function () {
+            return {
+                filters: {
+                    'department': department,
+                    'status': 'Active',
+                }
+            };
+        };
+        frm.fields_dict['employee'].grid.refresh();
     }
 });
-
-
-frappe.ui.form.on('Reservation', {  
-	refresh: function (frm) {
-		// Add Checkout Button
-		frm.add_custom_button(__('Checkout'), function () {
-			if (!frm.doc.expected_departure) {
-				frm.set_value('expected_departure', frappe.datetime.nowdate());
-			}
-			frm.set_df_property("section_house_keeping", 'hidden', 0);
-			frm.set_df_property('section_break_emp', 'hidden', 0);
-			frm.set_df_property("rating", 'hidden', 0);
-			
-			frm.add_custom_button(__('Create Invoice'), function() {
-				frappe.call({
-					method: 'hotel_management.hotel_management.doctype.reservation.reservation.create_invoice',
-					args: {
-						'reservation_id': frm.doc.name,
-						'customer_name': frm.doc.customer_name,  // Fix here
-						'rate': frm.doc.reservation_line[0].rate,  // Fix here
-						'capacity': frm.doc.reservation_line[0].capacity,
-						'hotel_room': frm.doc.hotel_room
-					},
-					callback: function(response) {
-						frappe.msgprint("Invoice Created Successfully");
-						frappe.set_route('Form', 'Sales Invoice', response.message);
-					}
-				});
-			});
-						
-		});
-	},
-	department: function (frm) {
-		var department = frm.doc.department;
-
-		frm.fields_dict['employee'].grid.get_field('full_name').get_query = function () {
-			return {
-				filters: {
-					'department': department,
-					'status': 'Active',
-					
-				}
-			};
-		};
-		frm.fields_dict['employee'].grid.refresh();
-	}
-});
-
-
 
 

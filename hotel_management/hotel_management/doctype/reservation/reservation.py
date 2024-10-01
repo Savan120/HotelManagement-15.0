@@ -19,6 +19,51 @@ import io
 
 class Reservation(Document):
     pass
+    
+    
+@frappe.whitelist()
+def update_room_status_on_reservation(doc, method):
+    print("Triggered for document::::::::::::::::::", doc, "with method:::::::::::::::::::::::::::::", method)
+    
+    if method == "on_submit":
+        if doc.hotel_room:
+            room = frappe.get_doc("Hotel Rooms", doc.hotel_room)
+            print("Current room status before update:", room.status)
+            if room.status == 'Available':
+                room.status = 'Reserved'
+                room.save()
+                print("Room status updated to::::::::::::::::::::::::::::", room.status)
+            else:
+                print(f"The room {room.name} is not available for reservation.")
+    elif method == "Checkout":
+        if doc.hotel_room:
+            room = frappe.get_doc("Hotel Rooms", doc.hotel_room)
+            room.status = 'Available'
+            room.save()
+            print("Room status reverted to:", room.status)
+
+# @frappe.whitelist()
+# def update_room_status_on_reservation(doc, method):
+#     # Fetch the document using the name
+#     docs = frappe.get_doc("Reservation:::::::::::::::::::::::::::::::::", doc)
+    
+#     if method == "on_submit":
+#         if doc.hotel_room:
+#             room = frappe.get_doc("Hotel Rooms", doc.hotel_room)
+#             frappe.logger().info("Current room status before update: {}".format(room.status))
+#             if room.status == 'Available':
+#                 room.status = 'Reserved'
+#                 room.save()
+#                 frappe.logger().info("Room status updated to: {}".format(room.status))
+#             else:
+#                 frappe.logger().info("The room {} is not available for reservation.".format(room.name))
+#     elif method == "Checkout":
+#         if doc.hotel_room:
+#             room = frappe.get_doc("Hotel Rooms", doc.hotel_room)
+#             room.status = 'Available'
+#             room.save()
+#             frappe.logger().info("Room status reverted to: {}".format(room.status))
+
 
 
 @frappe.whitelist()
@@ -26,7 +71,7 @@ def send_mail(doc):
     filter_dict = json.loads(doc)
     email_address = filter_dict.get('email')
 
-    print ("\n doc :::::::::", doc, filter_dict)
+    # print ("\n doc :::::::::", doc, filter_dict)
     
     if email_address:
         pdf = frappe.attach_print(
@@ -49,7 +94,7 @@ def send_mail(doc):
             
 @frappe.whitelist()
 def get_hotel_room(doctype, filter):
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",filter)
+    # print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",filter)
     """
     Get hotel room details based on the provided filter.
     Args:
@@ -76,7 +121,7 @@ def get_hotel_room(doctype, filter):
         "rate": hotel_room.rate,
         "capacity": hotel_room.capacity
     })
-    print(">response::::::::::::::::::::::::::::::::::",response)
+    # print(">response::::::::::::::::::::::::::::::::::",response)
 
     return response
 
@@ -84,11 +129,11 @@ def get_hotel_room(doctype, filter):
 @frappe.whitelist()
 def create_invoice(reservation_id, customer_name, rate, capacity, hotel_room):
     # Fetch the default company name
-    print("Reservation Id::::::::::::::::::::::::::::",reservation_id)
-    print("Guest Name::::::::::::::::::::::::::::::::::::",customer_name)
-    print("Room_rate::::::::::::::::::::::::::::::",rate)
-    print("Capacity::::::::::::::::::::::::::::::::::::",capacity)
-    print("Hotel Room:::::::::::::::::::::::::::::::::::;",hotel_room)
+    # print("Reservation Id::::::::::::::::::::::::::::",reservation_id)
+    # print("Guest Name::::::::::::::::::::::::::::::::::::",customer_name)
+    # print("Room_rate::::::::::::::::::::::::::::::",rate)
+    # print("Capacity::::::::::::::::::::::::::::::::::::",capacity)
+    # print("Hotel Room:::::::::::::::::::::::::::::::::::;",hotel_room)
     default_company = frappe.defaults.get_user_default('Company')
     
     existing_invoice = frappe.db.exists('Sales Invoice', {
